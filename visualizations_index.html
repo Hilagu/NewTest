@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אינדקס ויזואליזציות | Visualizations Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --accent-cyan: #00d9ff;
+            --accent-magenta: #ff00aa;
+            --accent-gold: #ffd700;
+            --accent-lime: #7fff00;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --card-bg: rgba(26, 26, 46, 0.8);
+            --glow-magenta: 0 0 40px rgba(255, 0, 170, 0.3);
+            --glow-lime: 0 0 40px rgba(127, 255, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 0, 170, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(127, 255, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 217, 255, 0.05) 0%, transparent 60%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 0, 170, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(127, 255, 0, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 0, 170, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent-magenta), var(--accent-lime));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        /* Project Card */
+        .project-card {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 35px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            animation: cardAppear 0.6s ease-out backwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 24px 24px 0 0;
+            transition: height 0.3s ease;
+        }
+
+        .project-card.magenta::before { background: linear-gradient(90deg, var(--accent-magenta), transparent); }
+        .project-card.lime::before { background: linear-gradient(90deg, var(--accent-lime), transparent); }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .project-card.magenta:hover { box-shadow: var(--glow-magenta); }
+        .project-card.lime:hover { box-shadow: var(--glow-lime); }
+
+        .project-card:hover::before {
+            height: 6px;
+        }
+
+        .card-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .card-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .card-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .project-card.magenta:hover .card-title { color: var(--accent-magenta); }
+        .project-card.lime:hover .card-title { color: var(--accent-lime); }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .card-features li {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            line-height: 1.8;
+            padding-right: 20px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .card-features li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .card-arrow span {
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .card-arrow span {
+            transform: translateX(-5px);
+        }
+
+        .project-card.magenta .card-arrow { color: var(--accent-magenta); }
+        .project-card.lime .card-arrow { color: var(--accent-lime); }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-heart {
+            color: var(--accent-magenta);
+            animation: heartBeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .logo {
+                font-size: 3em;
+            }
+
+            .header p {
+                font-size: 1.1em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 25px;
+            }
+
+            .card-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← חזרה לאינדקס הראשי</a>
+
+        <header class="header">
+            <div class="logo">🎨</div>
+            <h1>ויזואליזציות אינטראקטיביות</h1>
+            <p>אוסף של ויזואליזציות מתקדמות לחקר נושאים מדעיים וטכנולוגיים</p>
+        </header>
+
+        <div class="projects-grid">
+            <a href="machine_learning_visualization.html" class="project-card magenta">
+                <span class="card-icon">🤖</span>
+                <h2 class="card-title">ויזואליזציית למידה מכונה</h2>
+                <p class="card-description">
+                    הדמיה אינטראקטיבית מקיפה של אלגוריתמים בלמידה מכונה. חקרו כיצד עובדים מודלים שונים דרך ויזואליזציות מרהיבות ואינטראקטיביות.
+                </p>
+                <ul class="card-features">
+                    <li>סיווג (Classification) עם קווי הפרדה</li>
+                    <li>רגרסיה (Regression) עם התאמת עקומות</li>
+                    <li>קיבוץ (Clustering) עם אלגוריתם K-Means</li>
+                    <li>רשתות נוירונים (Neural Networks)</li>
+                    <li>למידה חיזוקית (Reinforcement Learning)</li>
+                </ul>
+                <div class="card-tags">
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">AI</span>
+                    <span class="tag">ויזואליזציה</span>
+                    <span class="tag">אינטראקטיבי</span>
+                </div>
+                <div class="card-arrow">
+                    <span>←</span>
+                    פתח ויזואליזציה
+                </div>
+            </a>
+
+            <a href="protein_folding.html" class="project-card lime">
+                <span class="card-icon">🧬</span>
+                <h2 class="card-title">קיפול חלבונים</h2>
+                <p class="card-description">
+                    ויזואליזציה תלת-ממדית אינטראקטיבית של תהליך קיפול חלבונים. חקרו את המבנה המורכב של חלבונים ואת הדרך שבה הם מתקפלים למבנה הפונקציונלי שלהם.
+                </p>
+                <ul class="card-features">
+                    <li>ויזואליזציה תלת-ממדית עם Three.js</li>
+                    <li>אנימציה של תהליך הקיפול</li>
+                    <li>בקרת מהירות ושליטה מלאה</li>
+                    <li>צביעה לפי סוגי חומצות אמינו</li>
+                    <li>מצבי תצוגה שונים (מבנה מלא/שלד)</li>
+                </ul>
+                <div class="card-tags">
+                    <span class="tag">ביולוגיה</span>
+                    <span class="tag">3D</span>
+                    <span class="tag">מדע</span>
+                    <span class="tag">אינטראקטיבי</span>
+                </div>
+                <div class="card-arrow">
+                    <span>←</span>
+                    פתח ויזואליזציה
+                </div>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>נבנה עם <span class="footer-heart">❤️</span> ותשוקה ללמידה</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        const colors = ['#ff00aa', '#7fff00', '#00d9ff'];
+        
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
+
